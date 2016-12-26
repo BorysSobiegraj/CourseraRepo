@@ -1,0 +1,56 @@
+---
+title: "Application presentation"
+author: "BS"
+date: "26 grudnia 2016"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(ggplot2)
+library(plotly)
+```
+
+## Introduciton
+
+The application is focused on enabling choosing subsets of data from the Iris data set (Species to focus on) and choosing if you want linear regretion to be fited to each Specie separatly (Per Specie) or to all chosen togethe (Whole Data Series).
+
+Additionaly you can use the slider seen below to narrow the range of data on the X axis.
+
+## Starting Point
+
+The basic chart showing linear regression fit for all Species without explicitly informing on which data point considers which specie
+
+```{r , echo = T , fig.height=3}
+      g <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) + geom_point() + geom_smooth(method = "lm")
+      ggplotly(g)
+```
+
+
+## Contols in the App
+There are 3 controlss that are resposnsible for 
+
+- choosing LM fit           
+<img src="C:/Users/bsobiegraj001/Desktop/private/Data Scientist track/DataProducts/week4/LMFit.PNG" />
+
+- choosing on which specie to focus       
+<img src="C:/Users/bsobiegraj001/Desktop/private/Data Scientist track/DataProducts/week4/Specie.PNG" />
+
+- managing displayed Sepal Length range
+<img src="C:/Users/bsobiegraj001/Desktop/private/Data Scientist track/DataProducts/week4/SepalLengthRange.PNG" />
+
+
+
+## Chart adjustmented through controls
+
+If you pick: sestosa and versicolor, with option: Per Specie
+
+This chart will display:
+```{r }
+species_data <- iris[ iris$Species %in% unique(iris$Species)[1:2],]
+  g <- ggplot(data = species_data, aes(x = Sepal.Length, y = Sepal.Width, color= Species)) + geom_point() + geom_smooth(method = "lm")
+  ggplotly(g)
+      
+```
+
